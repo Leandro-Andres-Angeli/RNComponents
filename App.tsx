@@ -5,10 +5,17 @@
  * @format
  */
 
-import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
-
-function App() {
+import { NavigationContainer } from '@react-navigation/native';
+import {
+  StatusBar,
+  StyleSheet,
+  Text,
+  useColorScheme,
+  View,
+} from 'react-native';
+import Navigator from './src/navigator/Navigator';
+import Icon from 'react-native-vector-icons/Ionicons';
+/* function App() {
   const isDarkMode = useColorScheme() === 'dark';
 
   return (
@@ -16,6 +23,19 @@ function App() {
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
       <NewAppScreen templateFileName="App.tsx" />
     </View>
+  );
+} */
+function App() {
+  const isDarkMode = useColorScheme() === 'dark';
+
+  return (
+    <NavigationContainer>
+      <View style={styles.container}>
+        <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+
+        <Navigator />
+      </View>
+    </NavigationContainer>
   );
 }
 
