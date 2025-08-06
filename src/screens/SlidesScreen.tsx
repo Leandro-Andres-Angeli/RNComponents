@@ -7,10 +7,17 @@ import {
   View,
   Image,
   StyleSheet,
+  TouchableOpacity,
+  Animated,
 } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import HeaderTitle from '../components/HeaderTitle';
-import Carousel from 'react-native-snap-carousel';
+import Carousel, { Pagination } from 'react-native-snap-carousel';
+import Icon from 'react-native-vector-icons/Ionicons';
+
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import useAnimation from '../hooks/useAnimation';
 interface Slide {
   title: string;
   desc: string;
@@ -34,7 +41,7 @@ const items: Slide[] = [
     img: require('../assets/slide-3.png'),
   },
 ];
-const { height: screenHeight, width: screenWidth } = Dimensions.get('window');
+const { width: screenWidth } = Dimensions.get('window');
 const SlidesScreen = () => {
   const renderItem = (item: Slide) => {
     return (
@@ -64,7 +71,10 @@ const SlidesScreen = () => {
       </View>
     );
   };
-
+  const [activeSlide, setActiveSlide] = useState(0);
+  const [buttonVisible, setButtonVisible] = useState(false);
+  const { fadeIn, opacity } = useAnimation();
+  const navigation = useNavigation<NativeStackNavigationProp<any>>();
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View>
@@ -77,7 +87,91 @@ const SlidesScreen = () => {
           sliderWidth={screenWidth}
           itemWidth={screenWidth}
           layout="default"
+          pagingEnabled={true}
+          onSnapToItem={idx => {
+            setActiveSlide(idx);
+            if (idx === items.length - 1) {
+              setButtonVisible(true);
+              fadeIn();
+            }
+          }}
         />
+        <View>
+          <Pagination
+            dotsLength={items.length}
+            activeDotIndex={activeSlide}
+            containerStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.75)' }}
+            dotStyle={{
+              width: 10,
+              height: 10,
+              borderRadius: 5,
+              marginHorizontal: 8,
+              backgroundColor: 'rgba(255, 255, 255, 0.92)',
+            }}
+            inactiveDotStyle={
+              {
+                // Define styles for inactive dots here
+              }
+            }
+            inactiveDotOpacity={0.4}
+            inactiveDotScale={0.6}
+          />
+          {/* items.length - 1 === activeSlide */}
+        </View>
+        {
+          <Animated.View
+            style={{
+              minHeight: '10%',
+
+              alignItems: 'center',
+              justifyContent: 'center',
+              opacity,
+
+              display: buttonVisible ? 'flex' : 'none',
+            }}
+          >
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Home')}
+              style={{
+                width: 'auto',
+                paddingHorizontal: 10,
+                paddingVertical: 5,
+                backgroundColor: 'red',
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginLeft: 'auto',
+                marginRight: 10,
+                flexDirection: 'row',
+                gap: 5,
+                borderRadius: 10,
+              }}
+            >
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                <Text
+                  style={{
+                    color: 'white',
+
+                    fontSize: 20,
+                  }}
+                >
+                  Entrar
+                </Text>
+
+                <Icon
+                  name="chevron-forward-outline"
+                  size={20}
+                  color={'white'}
+                />
+              </View>
+            </TouchableOpacity>
+          </Animated.View>
+        }
       </View>
     </SafeAreaView>
   );
