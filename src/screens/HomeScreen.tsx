@@ -8,8 +8,11 @@ import FlatListMenuItem from '../components/FlatListMenuItem';
 import { menuItems } from '../data/menuItems';
 import HeaderTitle from '../components/HeaderTitle';
 import ItemSeparator from '../components/ItemSeparator';
+import { useTheme } from '@react-navigation/native';
 
 const HomeScreen = () => {
+  const theme = useTheme();
+  console.log('theme', theme);
   return (
     <View style={{ flex: 1, ...styles.globalMargin }}>
       <FlatList

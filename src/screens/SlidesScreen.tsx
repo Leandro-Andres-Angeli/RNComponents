@@ -127,7 +127,7 @@ const SlidesScreen = () => {
               justifyContent: 'center',
               opacity,
 
-              display: buttonVisible ? 'flex' : 'none',
+              pointerEvents: buttonVisible ? 'auto' : 'none',
             }}
           >
             <TouchableOpacity

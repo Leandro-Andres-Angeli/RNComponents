@@ -7,6 +7,7 @@
 
 import { NavigationContainer } from '@react-navigation/native';
 import {
+  Appearance,
   StatusBar,
   StyleSheet,
   Text,
@@ -25,11 +26,26 @@ import Icon from 'react-native-vector-icons/Ionicons';
     </View>
   );
 } */
+import { DefaultTheme, DarkTheme } from '@react-navigation/native';
+
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
+  console.log(Appearance.getColorScheme());
+  const customTheme: ReactNavigation.Theme =
+    Appearance.getColorScheme() === 'dark'
+      ? {
+          ...DarkTheme,
+          colors: {
+            ...DarkTheme.colors,
+            primary: 'white',
+            text: 'white',
+            background: '#0e153a',
+          },
+        }
+      : DefaultTheme;
 
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={customTheme}>
       <View style={styles.container}>
         <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
 

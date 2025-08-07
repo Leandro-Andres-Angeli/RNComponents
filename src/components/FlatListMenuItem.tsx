@@ -6,6 +6,7 @@ import {
   NavigationProp,
   ParamListBase,
   useNavigation,
+  useTheme,
 } from '@react-navigation/native';
 
 interface Props {
@@ -14,6 +15,7 @@ interface Props {
 const FlatListMenuItem = ({ menuItem }: Props) => {
   const navigation = useNavigation<NavigationProp<ParamListBase>>();
   console.log('menu item', menuItem);
+  const theme = useTheme();
   return (
     <TouchableOpacity
       activeOpacity={0.8}
@@ -21,7 +23,10 @@ const FlatListMenuItem = ({ menuItem }: Props) => {
     >
       <View style={styles.container}>
         <Icon name={menuItem.icon} color={'gray'} size={23} />
-        <Text style={styles.itemText}> {menuItem.name}</Text>
+        <Text style={{ ...styles.itemText, color: theme.colors.text }}>
+          {' '}
+          {menuItem.name}
+        </Text>
         <View style={styles.chevronIconContainer}>
           <Icon
             style={styles.chevronIcon}
