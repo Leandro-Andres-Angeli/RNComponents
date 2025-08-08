@@ -10,12 +10,11 @@ import {
   Appearance,
   StatusBar,
   StyleSheet,
-  Text,
   useColorScheme,
   View,
 } from 'react-native';
 import Navigator from './src/navigator/Navigator';
-import Icon from 'react-native-vector-icons/Ionicons';
+
 /* function App() {
   const isDarkMode = useColorScheme() === 'dark';
 
@@ -26,39 +25,43 @@ import Icon from 'react-native-vector-icons/Ionicons';
     </View>
   );
 } */
-import { DefaultTheme, DarkTheme } from '@react-navigation/native';
+// import { DefaultTheme, DarkTheme } from '@react-navigation/native';
+import {
+  ThemeConext,
+  ThemeProvider,
+} from './src/context/themeContext/ThemeContext';
+import { PropsWithChildren, useContext } from 'react';
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
   console.log(Appearance.getColorScheme());
-  const customTheme: ReactNavigation.Theme =
-    Appearance.getColorScheme() === 'dark'
-      ? {
-          ...DarkTheme,
-          colors: {
-            ...DarkTheme.colors,
-            primary: 'white',
-            text: 'white',
-            background: '#0e153a',
-          },
-        }
-      : DefaultTheme;
+  // const customTheme: ReactNavigation.Theme =
+  //   Appearance.getColorScheme() === 'dark'
+  //     ? {
+  //         ...DarkTheme,
+  //         colors: {
+  //           ...DarkTheme.colors,
+  //           primary: 'white',
+  //           text: 'white',
+  //           background: '#0e153a',
+  //         },
+  //       }
+  //     : DefaultTheme;
 
   return (
-    <NavigationContainer theme={customTheme}>
-      <View style={styles.container}>
-        <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-
-        <Navigator />
-      </View>
-    </NavigationContainer>
+    <AppState>
+      {/* using  theme from reducer*/}
+      <Navigator />
+    </AppState>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
+const AppState = ({ children }: PropsWithChildren) => {
+  return <ThemeProvider>{children}</ThemeProvider>;
+};
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//   },
+// });
 
 export default App;
