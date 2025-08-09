@@ -6,6 +6,7 @@ import HeaderTitle from '../components/HeaderTitle';
 
 const ModalScreen = () => {
   const [modalShow, setModalShow] = useState(false);
+
   const openModal = () => {
     setModalShow(!modalShow);
   };
