@@ -15,7 +15,8 @@ interface Props {
 }
 const FlatListMenuItem = ({ menuItem }: Props) => {
   const navigation = useNavigation<NavigationProp<ParamListBase>>();
-
+  // Get current theme from context
+  // Note: useTheme() from react-navigation is commented out in favor of custom theme context
   // const theme = useTheme();
   const { theme } = useContext(ThemeConext);
   return (

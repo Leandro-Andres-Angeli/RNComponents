@@ -23,7 +23,7 @@ export const darkTheme: ThemeState = {
   dark: true,
   colors: {
     ...DarkTheme.colors,
-    primary: 'red',
+    primary: 'orange',
     background: 'blue',
     text: 'white',
   },

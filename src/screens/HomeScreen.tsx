@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import { View, FlatList } from 'react-native';
-import React from 'react';
+import React, { useContext } from 'react';
 
 import { styles } from '../theme/AppTheme';
 
@@ -9,10 +9,14 @@ import { menuItems } from '../data/menuItems';
 import HeaderTitle from '../components/HeaderTitle';
 import ItemSeparator from '../components/ItemSeparator';
 import { useTheme } from '@react-navigation/native';
+import { ThemeConext } from '../context/themeContext/ThemeContext';
 
 const HomeScreen = () => {
-  const theme = useTheme();
-  console.log('theme', theme);
+  // const theme = useTheme();
+  const {
+    theme: { color },
+  } = useContext(ThemeConext);
+
   return (
     <View style={{ flex: 1, ...styles.globalMargin }}>
       <FlatList
