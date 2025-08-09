@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
   Animated,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import HeaderTitle from '../components/HeaderTitle';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -18,6 +18,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import useAnimation from '../hooks/useAnimation';
+import { ThemeConext } from '../context/themeContext/ThemeContext';
 interface Slide {
   title: string;
   desc: string;
@@ -43,6 +44,9 @@ const items: Slide[] = [
 ];
 const { width: screenWidth } = Dimensions.get('window');
 const SlidesScreen = () => {
+  const {
+    theme: { colors },
+  } = useContext(ThemeConext);
   const renderItem = (item: Slide) => {
     return (
       <View
@@ -136,7 +140,7 @@ const SlidesScreen = () => {
                 width: 'auto',
                 paddingHorizontal: 10,
                 paddingVertical: 5,
-                backgroundColor: 'red',
+                backgroundColor: colors.primary,
                 justifyContent: 'center',
                 alignItems: 'center',
                 marginLeft: 'auto',
